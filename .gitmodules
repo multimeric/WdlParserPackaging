@@ -1,0 +1,6 @@
+[submodule "wdl"]
+	path = wdl
+	url = https://github.com/openwdl/wdl
+[submodule "gatk4-data-processing"]
+	path = gatk4-data-processing
+	url = https://github.com/gatk-workflows/gatk4-data-processing

@@ -1,0 +1,25 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+# command to install dependencies
+install:
+  - pip install -r dev-requirements.txt
+  - |
+      for version_path in wdl/versions/*; do
+        version=`basename $version_path`
+        grammar=$version_path/parsers/grammar.hgr
+
+        if [[ -f $grammar ]]; then
+          hermes generate $version_path/parsers/grammar.hgr --language=python --name=$version --header --directory wdl_parser
+        fi
+      done
+
+      rename 's/-/_/g' wdl_parser/*
+      rename 's/_parser.py/.py/g' wdl_parser/*
+
+# command to run tests
+script:
+  - python -m unittest test.py
