@@ -1,25 +1,28 @@
 language: python
 python:
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7"
-# command to install dependencies
+- '3.4'
+- '3.5'
+- '3.6'
+- '3.7'
 install:
-  - pip install -r dev-requirements.txt
-  - |
-      for version_path in wdl/versions/*; do
-        version=`basename $version_path`
-        grammar=$version_path/parsers/grammar.hgr
+- pip install -r dev-requirements.txt
+- |
+  for version_path in wdl/versions/*; do
+    version=`basename $version_path`
+    grammar=$version_path/parsers/grammar.hgr
 
-        if [[ -f $grammar ]]; then
-          hermes generate $version_path/parsers/grammar.hgr --language=python --name=$version --header --directory wdl_parser
-        fi
-      done
+    if [[ -f $grammar ]]; then
+      hermes generate $version_path/parsers/grammar.hgr --language=python --name=$version --header --directory wdl_parser
+    fi
+  done
 
-      rename 's/-/_/g' wdl_parser/*
-      rename 's/_parser.py/.py/g' wdl_parser/*
-
-# command to run tests
+  rename 's/-/_/g' wdl_parser/*
+  rename 's/_parser.py/.py/g' wdl_parser/*
 script:
-  - python -m unittest test.py
+- python -m unittest test.py
+deploy:
+  provider: pypi
+  user: "TMiguelT"
+  distributions: "sdist bdist_wheel"
+  password:
+    secure: 0bK2/lVVy8SBzAby728C2dYD6eGy5gDYI+j1L0K9k5EqtlD7+yGm4YoDQImF5OKtE7NIeA0rxyy5m3VmfkNGRx98h5F3iXvSZYQs1st9dWXhJPlkK9EtIA1OexDwz5x2OrjD/w8ZfcXoHwx5LK1bg9U6nCe118kYD0X6JLMixNTB/Stic6MYnvAq+NFffoCRO1XqoNqqB94sHe0SCI7P/VxbCPA8+YmoJYAXTWBYHQh0ng6HivLMsG9Aq6fl7wAbg9K/BndaHkjJcO6bgHlwyHIFOH+S8o8J2uoi9J/AsKbNYNctALr6YXLy/gjKofa458B2/AYnpxytbNPvNfPx9UhQ6fVZlUuTeYfWND8NOJltriEGA+HkZthr5HtDP8JnSU6ofk2rn3EGyzHJUaz0wATo2F+YFRBmq38KkKBycUw9D54ak/0w576PS0doX/xnfLlFVHtB80RaBd25qRqn5hlo320eKMCHt6U9PkzeQZajAKRe6CJbCX3Ot2uaGCdkKZ2kznWeeWCOB4pqHukHR6AIb9Wq17xour4d1y9jyOakI/qxzQtCrCw5JiQQ1Iy399d51+RNkvxrmPlPXuYSjWxj5r2iiIKuIrPVrWBPDYAD1J2mWHyrpq6JQ1pM5DUvy8cZHWSrXDCT6WU8kCzZ1KWp5H8pmbThO6vG9hXbRvU=
