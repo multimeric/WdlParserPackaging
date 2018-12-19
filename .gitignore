@@ -2,3 +2,4 @@
 venv
 wdl_parser/*.py
 !wdl_parser/__init__.py
+.pytest_cache
