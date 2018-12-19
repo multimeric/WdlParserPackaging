@@ -7,7 +7,7 @@ install:
 - pip install -r dev-requirements.txt
 - |
   for version_path in wdl/versions/*; do
-    version=`basename $version_path`
+    version=`basename $version_path | sed 's/\-/_/g' | sed 's/\./_/g'`
     grammar=$version_path/parsers/grammar.hgr
 
     if [[ -f $grammar ]]; then
@@ -15,7 +15,6 @@ install:
     fi
   done
 
-  rename 's/-/_/g' wdl_parser/*
   rename 's/_parser.py/.py/g' wdl_parser/*
 script:
 - python -m unittest test.py
