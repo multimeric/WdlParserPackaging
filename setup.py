@@ -10,6 +10,6 @@ setup(
     url="https://github.com/TMiguelT/WdlParserPackaging",
     name='wdl_parser',
     packages=['wdl_parser'],
-    version='0.0.1',
+    version='0.0.2',
     install_requires=[],
 )
